@@ -1,19 +1,18 @@
-const { DataTypes } = require("@sequelize/core");
-const db = require("../database.js");
+const { DataTypes } = require("sequelize");
 
-const Category = db.define('category',{
-    categoryId:{
-        type: DataTypes.UUID,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true
+module.exports = (sequelize) => {
+    sequelize.define('category', {
+        categoryId:{
+            type: DataTypes.UUID,
+            allowNull: false,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        category_name:{
+            type: DataTypes.STRING,
+            allowNull: false
+        }
     },
-    category_name:{
-        type: DataTypes.STRING,
-        allowNull: false
-    }
-},
-    { timestamps: false }
-);
-
-module.exports = Category;
+        { timestamps: false }
+    );
+}

@@ -3,23 +3,25 @@ const app = express();
 const mysql = require('mysql2');
 const dotenv =  require('dotenv');
 const morgan = require('morgan');
+const { getUsers } = require('./controllers/');
 const { loginCtrl, registerCtrl } = require('./controllers/auth.js');
 const { updateCtrl } = require('./controllers');
-const db = require('./database');
+const sequelize = require('./database');
 const AdminBro = require('admin-bro');
 const AdminBroExpress = require('@admin-bro/express');
 const AdminJS = require('adminjs');
 const AdminJSSequelize = require('@adminjs/sequelize');
+const { verify } = require('./helpers/handleJwt');
 dotenv.config();
 
 app.use(express.json());
 app.use(morgan('dev'));
 
 //ROUTES
-app.get('/', (req, res) => { res.send('Hello World!'); });
+app.post('/', verify, getUsers);
 app.post('/login', loginCtrl);
-app.post('/admin/resources/users/actions/new', registerCtrl);
-app.patch('/:id', updateCtrl);
+app.post('/register', registerCtrl);
+app.patch('/:id', verify, updateCtrl);
 
 AdminJS.registerAdapter(AdminJSSequelize)
 const run = () => {
@@ -36,7 +38,7 @@ const run = () => {
         });
         //Admin Panel
         const adminBro = new AdminBro({
-            databases: [db],
+            databases: [sequelize],
             rootPath: '/admin'
         });
         //create an express router that will handle all adminJS routes

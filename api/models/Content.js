@@ -1,35 +1,39 @@
-const { DataTypes } = require("@sequelize/core");
-const db = require("../database.js");
+const { DataTypes } = require("sequelize");
 
-const Content = db.define('content',{
-    contentId:{
-        type: DataTypes.UUID,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true
+module.exports = (sequelize) => {
+    sequelize.define('content', {
+        contentId:{
+            type: DataTypes.UUID,
+            allowNull: false,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        title:{
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
+        },
+        desc: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        img: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        video: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        year: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        genre: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
     },
-    title:{
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
-    desc: {
-        type: DataTypes.STRING
-    },
-    img: {
-        type: DataTypes.STRING
-    },
-    video: {
-        type: DataTypes.STRING
-    },
-    year: {
-        type: DataTypes.STRING
-    },
-    genre: {
-        type: DataTypes.STRING
-    }
-},
-    { timestamps: false }
-);
-
-module.exports = Content;
+        { timestamps: false }
+    );
+}

@@ -20,7 +20,9 @@ module.exports = {
         if(!authorization) return res.status(401).json({ err: 'no authorized' });
         const encoder = new TextEncoder();
         try {
-            await jwtVerify(authorization, encoder.encode(process.env.JWT_SECRET));
+            const dataJWT = await jwtVerify(authorization, encoder.encode(process.env.JWT_SECRET));
+            const role = dataJWT.payload.role;
+            req.session.role = role;
             next();
         } catch (error) {
             res.status(400).json(error)

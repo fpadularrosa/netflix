@@ -1,6 +1,6 @@
 const { tokenSign } = require("../helpers/handleJwt");
 const { encrypt, compare } = require("../helpers/handleBcrypt");
-const User = require("../models/User");
+const { User } = require("../database.js");
 
 module.exports = {
     loginCtrl: async (req, res) => {
@@ -11,7 +11,7 @@ module.exports = {
 
         const tokenSession = await tokenSign(user);
         const passCorrect = await compare(password, user.password);
-        
+        req.session.cookie.user = {...user}
         if(!passCorrect) res.status(401).json({ error: 'Credenciales inválidas.' })
         else res.status(200).json({ success: true, data: { user, tokenSession } })
     },

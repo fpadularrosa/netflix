@@ -26,9 +26,10 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 const { User, Category, Content } = sequelize.models;
 
-User.hasMany(Content);
-Content.hasMany(Category);
+User.hasMany(Content, { foreignKey: 'contentId' });
+Content.hasMany(Category, { foreignKey: 'categoryId' });
 
 module.exports = {
-    ...sequelize.models
+    ...sequelize.models,
+    sequelize
 }

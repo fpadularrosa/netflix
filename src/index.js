@@ -5,9 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const [movies, useMovies] = useState(await (fetch('http://localhost:3001/movies', {
+  method: 'GET',
+  headers: {
+    'Content-Type':'application/json'
+  }
+}).json()));
+
 root.render(
   <React.StrictMode>
-    <App />
+    <App movies={movies}/>
   </React.StrictMode>
 );
 

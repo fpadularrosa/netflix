@@ -23,10 +23,10 @@ app.use(cookieParser());
 const oneDay = 1000 * 60 * 60 * 24;
 
 app.use(sessions({
-secret: process.env.SECRET_SESSIONS,
-saveUninitialized:true,
-cookie: { maxAge: oneDay },
-resave: false
+    secret: process.env.SECRET_SESSIONS,
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false
 }));
 
 //ROUTES
@@ -51,12 +51,12 @@ const run = () => {
             if (err) throw err;
             console.log('Connected to database');
         });
-        //Admin Panel
+
         const adminBro = new AdminBro({
             databases: [sequelize],
             rootPath: '/admin'
         });
-        //create an express router that will handle all adminJS routes
+
         const router = AdminBroExpress.buildRouter(adminBro)
         app.use(adminBro.options.rootPath, router)
 

@@ -4,7 +4,7 @@ function App(props) {
   return (
     <div className="App">
       <nav>
-       <h2>MovI ES<\h2>
+       <h2>MovI ES</h2>
        <div>
         <button onClick={window.localStorage.removeItem('user')}>Log out</button>
        </div>
